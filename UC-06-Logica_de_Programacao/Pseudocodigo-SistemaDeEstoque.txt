@@ -1,0 +1,33 @@
+// Algoritmo: SistemaDeEstoque
+// O pseudocódigo nos permite pensar na lógica primeiro.
+
+VAR saldoEstoque: numero
+VAR continuarLoop: texto = "s"
+
+ESCREVER "Digite o saldo inicial:"
+LER saldoEstoque
+ENQUANTO continuarLoop == "s" FAÇA
+    ESCREVER "Saldo atual: " + saldoEstoque
+    ESCREVER "Digite a operação (1=compra, 2=venda):"
+    LER tipoOperacao
+
+    ESCREVER "Digite a quantidade:"
+    LER quantidade
+
+    SE tipoOperacao == 1 ENTÃO
+        saldoEstoque = saldoEstoque + quantidade
+    SENÃO SE tipoOperacao == 2 ENTÃO
+        SE quantidade <= saldoEstoque ENTÃO
+            saldoEstoque = saldoEstoque - quantidade
+        SENÃO
+            ESCREVER "Saldo insuficiente!"
+        FIM_SE
+    FIM_SE
+
+    ESCREVER "Saldo atualizado: " + saldoEstoque
+    ESCREVER "Deseja continuar (s/n)"
+    LER continuarLoop
+FIM_ENQUANTO
+
+ESCREVER "Sistema encerrado."
+FIM
