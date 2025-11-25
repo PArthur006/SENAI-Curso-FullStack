@@ -1,0 +1,84 @@
+body, html {
+  height: 100%;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+footer p {
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  margin: 0;
+}
+
+header img {
+  height: 70px;
+  width: 70px;
+}
+
+/* Banners */
+#section-banners img {
+  height: 500px;
+  object-fit: cover;
+}
+
+/* Mais Vendidos */
+#section-vendidos {
+  text-align: center;
+  margin-bottom: 50px;
+}
+#section-vendidos h2 {
+  font-weight: bold;
+  padding: 20px;
+}
+#section-vendidos img {
+  height: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+#section-vendidos .card {
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+#section-vendidos .preco {
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Botão Voltar ao Topo */
+#voltar-topo {
+  position: fixed;
+  bottom: 5px;
+  right: 50px;
+  z-index: 1000;
+}
+
+/* Login e Cadastro */
+#section-login {
+  margin-top: 100px;
+  max-width: 500px; 
+}
+#section-login h1 {
+  text-align: center;
+}
+#section-login input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#section-cadastro {
+  padding: 5px;
+  text-align: center;
+  background-color: #fff;
+  max-width: 500px; 
+}
+
+#form-cadastrar {
+  padding: 50px;
+  display: none; 
+}
