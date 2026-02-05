@@ -1,33 +1,19 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProdutoService } from 'src/app/servicos/produto.service';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
 })
-export class InicioComponent {
-  gridCols: number = 3;
+export class InicioComponent implements OnInit {
+  produtos: any[] = [];
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.setGridCols(window.innerWidth);
-  }
+  constructor(private produtoService: ProdutoService) {}
 
-  ngOnInit() {
-    this.setGridCols(window.innerWidth);
-  }
-
-  setGridCols(width: number) {
-    if (width <= 768) {
-      this.gridCols = 1;
-    } else if (width <= 1024) {
-      this.gridCols = 2;
-    } else {
-      this.gridCols = 3;
-    }
-  }
-
-  getGridCols(): number {
-    return this.gridCols;
+  ngOnInit(): void {
+    this.produtoService.obterProdutos().subscribe((dados) => {
+      this.produtos = dados;
+    });
   }
 }

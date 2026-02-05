@@ -67,7 +67,6 @@ mat-card-actions {
   padding: 8px;
 }
 
-/* Adicionando responsividade para organizar os cards em telas menores */
 @media (max-width: 768px) {
   mat-grid-list {
     display: flex;
