@@ -1,3 +1,9 @@
-<app-menu></app-menu>
-<router-outlet></router-outlet>
-<app-rodape></app-rodape>
+<div class="d-flex flex-column min-vh-100">
+  <app-menu></app-menu>
+
+  <div class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </div>
+
+  <app-rodape></app-rodape>
+</div>
