@@ -1,0 +1,32 @@
+<div class="container mt-4 mb-5">
+  <h2>{{ produto.id ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+  
+  <form (ngSubmit)="salvarProduto()">
+    
+    <div class="mb-3">
+      <label class="form-label">Nome do Produto</label>
+      <input type="text" class="form-control" [(ngModel)]="produto.produto" name="produto" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descrição</label>
+      <textarea class="form-control" [(ngModel)]="produto.descricao" name="descricao" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Foto (Caminho/URL)</label>
+      <input type="text" class="form-control" [(ngModel)]="produto.foto" name="foto" required placeholder="Ex: assets/img/jogo1.png">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Preço</label>
+      <input type="number" class="form-control" [(ngModel)]="produto.preco" name="preco" required>
+    </div>
+
+    <button type="submit" class="btn btn-success me-2">
+      {{ produto.id ? 'Atualizar' : 'Cadastrar' }}
+    </button>
+    <a routerLink="/painel-principal" class="btn btn-secondary">Cancelar</a>
+  
+  </form>
+</div>

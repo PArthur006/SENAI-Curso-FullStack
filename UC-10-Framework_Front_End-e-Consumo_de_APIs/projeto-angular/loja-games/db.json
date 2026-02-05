@@ -1,0 +1,39 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "produto": "Jogo 1",
+      "descricao": "Descrição do Jogo 1",
+      "foto": "assets/img/jogo1.png",
+      "preco": 120
+    },
+    {
+      "id": 2,
+      "produto": "Jogo 2",
+      "descricao": "Descrição do Jogo 2",
+      "foto": "assets/img/jogo2.png",
+      "preco": 180
+    },
+    {
+      "id": 3,
+      "produto": "Jogo 3",
+      "descricao": "Descrição do Jogo 3",
+      "foto": "assets/img/jogo3.png",
+      "preco": 89.99
+    },
+    {
+      "id": 4,
+      "produto": "The Witcher 3",
+      "descricao": "jogo de rpg",
+      "foto": "assets/img/thewitcher.jpeg",
+      "preco": 280
+    },
+    {
+      "id": 5,
+      "produto": "Resident Evil: Requiem",
+      "descricao": "Novo jogo da saga Resident Evil",
+      "foto": "assets/img/RE_requiem.jpg",
+      "preco": 499.99
+    }
+  ]
+}
