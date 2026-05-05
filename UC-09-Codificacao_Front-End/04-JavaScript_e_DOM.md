@@ -33,7 +33,7 @@ Além disso, a manipulação do DOM dita a qualidade da *User Experience* (UX). 
 
 ---
 
-### 4. Blocos de Código
+### 4. Bloco de Código
 
 ```javascript
 // 1. Definição do Estado
