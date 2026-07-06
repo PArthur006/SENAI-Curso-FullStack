@@ -3,3 +3,13 @@ C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Cu
 C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.AssemblyInfo.cs
 C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.csproj.CoreCompileInputs.cache
 C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.sourcelink.json
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\bin\Debug\net10.0\Atividade.exe
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\bin\Debug\net10.0\Atividade.deps.json
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\bin\Debug\net10.0\Atividade.runtimeconfig.json
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\bin\Debug\net10.0\Atividade.dll
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\bin\Debug\net10.0\Atividade.pdb
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.dll
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\refint\Atividade.dll
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.pdb
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.genruntimeconfig.cache
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\ref\Atividade.dll
