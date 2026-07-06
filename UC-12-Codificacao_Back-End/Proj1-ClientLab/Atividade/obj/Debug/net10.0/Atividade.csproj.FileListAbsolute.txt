@@ -1,0 +1,5 @@
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.AssemblyInfoInputs.cache
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.AssemblyInfo.cs
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.csproj.CoreCompileInputs.cache
+C:\Users\pedro.almeida\OneDrive - First Decision\ESTUDOS_PESSOAIS\SENAI\SENAI-Curso-FullStack\UC-12-Codificacao_Back-End\Proj1-ClientLab\Atividade\obj\Debug\net10.0\Atividade.sourcelink.json
