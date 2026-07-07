@@ -10,7 +10,7 @@
                 <caption>Lista de clientes</caption>
                 <thead class="table-dark">
                     <tr>
-                        <th scope=" col">Id</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Nome</th>
                         <th scope="col">CPF</th>
                         <th scope="col">E-mail</th>
@@ -18,10 +18,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in @ViewBag.listaClientes)
+                    @foreach (var item in @ViewBag.ListaClientes)
                     {
                         <tr>
-                            <th scope="row">@item.Id</th>
+                            <th scope="row">@item.ID</th>
                             <td>@item.Nome</td>
                             <td>@item.Cpf</td>
                             <td>@item.Email</td>
@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in @ViewBag.listaFornecedores)
+                    @foreach (var item in @ViewBag.ListaFornecedores)
                     {
                         <tr>
                             <th scope="row">@item.Id</th>
