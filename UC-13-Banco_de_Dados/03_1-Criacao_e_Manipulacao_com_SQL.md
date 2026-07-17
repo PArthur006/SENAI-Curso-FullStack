@@ -161,3 +161,155 @@ WHERE ID_Cliente = 1;
 
 ---
 
+### Data Query Language (DQL)
+
+#### A) O Que é DQL?
+
+O DQL é o motor de leitura e extração do banco de dados. Enquanto o DDL constrói as tabelas e o DML insere os dados, o DQL tem uma única função: **pesquisar**.
+
+A regra de ouro do DQL é: ele **nunca** altera, apaga ou cria nada no banco físico. Ele apenas vai até o servidor, lê os dados baseados nos filtros que você pediu, e devolve um relatório virtual na tela. O coração dessa linguagem é o comando `SELECT`.
+
+#### B) Buscando Dados (`SELECT` e `WHERE`)
+
+O `SELECT` define **quais colunas** você quer ver, e o `WHERE` define **quais linhas** devem aparecer.
+
+- **Buscando apenas clientes específicos:**
+```sql
+-- "SELECIONE o NOME e o EMAIL da tabela CLIENTES, ONDE o cliente seja o JOÃO"
+SELECT Nome, Email
+FROM Clientes
+WHERE Nome = 'João da Silva';
+```
+
+- **ASTERISCO (*):** Se você usar `SELECT * FROM Clientes`, o banco traz todas as colunas. Na engenharia real, evite o `*` em sistemas grandes para não desperdiçar memória puxando colunas desnecessárias, mas é muito útil no dia a dia para testes rápidos.
+
+#### C) Cruzando Dados (`INNER JOIN`)
+
+Em um banco de dados normalizado, a informação estará espalhada. O nome do cliente está na tabela `Clientes`, mas o valor que ele gastou está na tabela `Pedidos`. O `INNER JOIN` é uma das pontes que unem essas tabelas temporariamente para gerar um relatório completo.
+
+- **Vinculando comprador com a sua compra:**
+```sql
+SELECT
+    Clientes.Nome,
+    Pedidos.Total,
+    Pedidos.DataDaCompra
+FROM Pedidos
+INNER JOIN Clientes ON Pedidos.ID_Cliente = Clientes.ID_Cliente;
+```
+
+- **Comando `ON`:** O comando `ON` ensina ao banco como as duas tabelas se conectam. Usando o exemplo anterior, você diz: "Junte a tabela Pedidos com Clientes, mas apenas onde o `ID_Cliente` de Pedidos for igual ao de Clientes.
+
+#### D) Ordenando os Resultados (`ORDER BY`)
+
+O banco de dados te devolve as informações na ordem em que elas foram inseridas fisicamente no disco. Se você quiser organizar isso (alfabeticamente, por data mais recente, maior valor), use o `ORDER BY` sempre no final do código.
+
+- **Ordenando pelos pedidos mais caros:**
+```sql
+SELECT Total, DataDaCompra
+FROM Pedidos
+ORDER BY Total DESC;
+```
+
+- **`ASC` e `DESC`:** Representam "Ascendente/Crescente" (`ASC`) e "Descendente/Decrescente" (`DESC`). Por padrão, se não colocar o comando `DESC`, a ordem vira ascendente.
+
+#### E) Funções de Agregação (`SUM` e `COUNT`)
+
+Elas pegam milhares de linhas e espremem em um único resultado matemático.
+
+- `COUNT()`: Conta quantas linhas existem.
+- `SUM()`: Soma os valores de uma coluna numérica.
+
+- **Faturamento de uma Empresa como exemplo:**
+```sql
+-- Me dê a soma de todos o spedidos e conte quantos pedidos foram feitos.
+SELECT
+    SUM(Total) AS Faturamento_Total
+    COUNT(ID_Pedido) AS Quantidade_De_Vendas
+FROM Pedidos;
+```
+
+- **O Termo `AS`:** Esse termo serve para criar um "apelido" para a coluna no relatório final, mas não cria nem modifica nada na planilha. É somente para não aparecer "Sem Nome de Coluna" no relatório.
+
+#### F) O Agrupador (`GROUP BY`)
+
+É aqui que a análise de dados acontece. O `GROUP BY` pega a matemática do `SUM` e do `COUNT` e divide ela em categorias.
+
+Imaginando que não queremos o faturamento total da empresa, mas sim o faturamento total por cliente.
+
+- **Relatório dos Clientes que mais gastaram:**
+```sql
+SELECT
+    Clientes.Nome,
+    SUM (Pedidos.Total) AS Total_Gasto,
+    COUNT (Pedidos.ID_Cliente) AS Qtd_Compras
+FROM Pedidos
+INNER JOIN Clientes ON Pedidos.ID_Cliente = Clientes.ID_Cliente
+GROUP BY Clientes.Nome
+ORDER BY Total_Gasto DESC;
+```
+
+#### G) JOINS
+
+Na engenharia de dados, especialmente em processos de migração, cruzamento ou consolidação de bases legadas, os dados nunca estão em uma única tabela. Os `JOINs` são as ferramentas cirúrgicas que você usa para costurar essas informações de volta.
+
+A diferença entre todos eles está puramente em uma regra: **como o banco de dados deve lidar com as "sobras"** (dados que existem em uma tabela, mas não têm correspondência na outra).
+
+Pensando no seguinte cenário:
+- Temos 4 clientes cadastrados: João, Maria, Pedro e Carlos.
+- João, Maria e Carlos fizeram compras.
+- Pedro não comprou nada (O ID dele não existe na tabela Pedidos).
+
+##### INNER JOIN (Interseção)
+
+É o cruzamento rigoroso. Ele diz ao banco para trazer **apenas** as linhas onde a união entre a tabela A e a tabela B seja perfeita. Quem ficar de fora da correspondência é simplesmente ocultado do relatório.
+
+- **Utilidade:** Relatórios exatos onde "sobras" ou dados incompletos não interessam.
+- **O que acontece com o Pedro:** Ele desaparece do resultado, porque o banco não encontrou nenhum pedido amarrado ao ID dele.
+- **Exemplo:**
+```sql
+-- Só traz os clientes que efetivamente gastaram.
+SELECT Clientes.Nome, Pedidos.Total
+FROM Clientes
+INNER JOIN Pedidos ON Clientes.ID_Cliente = Pedidos.ID_Cliente;
+```
+
+##### LEFT JOIN (Parte da Esquerda)
+
+É o JOIN mais crítico e usado em análises de negócio e auditorias. Ele diz ao banco: "Traga **Absolutamente todos** os registros da tabela da Esquerda (a primeira que escrevi no código), mesmo que eles não tenham nenhuma ligação lá na tabela da direita";
+
+- **Utilidade:** Descobrir o que "não aconteceu". Achar clientes inativos, produtos que nunca foram vendidos, ou falhas durante a migração de um sistema.
+- **O que acontece com o Pedro:** Ele **aparece** no relatório. Porém, como ele não tem pedidos do outro lado, as colunas relacionadas ao pedido dele virão preenchidas com `NULL` (vazio).
+- **Exemplo:**
+```sql
+-- Traz TODOS os clientes. O "Total" do Pedro virá escrito NULL.
+SELECT Clientes.Nome, Pedidos.Total
+FROM Clientes
+LEFT JOIN Pedidos ON Clientes.ID_Cliente = Pedidos.ID_Cliente;
+```
+
+- **Dica:** Na necessidade de verificar os nulos, você pode acrescentar o filtro `WHERE Pedidos.ID_Pedido IS NULL` no final do código. Com isso, o relatório mostrará exclusivamente clientes que nunca compraram nada.
+
+##### RIGHT JOIN (Parte da Direita)
+
+É o reflexo exato no `LEFT JOIN`. Ele obriga o motor do SQL a trazer tudo da tabeal da Direita (a segunda do código), garantindo as sobras dela, mesmo que não haja correspondente na tabela da Esquerda.
+
+- **Utilidade:** Rara no dia a dia. É muito mais comum e legível para a equipe de desenvolvimento simplesmente inverter a ordem das tabelas no código e usar o `LEFT JOIN`.
+- **Exemplo:**
+```sql
+-- Traz TODOS os pedidos, mesmo que (por uma falha do sistema) o cliente dono dele não exista mais.
+SELECT Clientes.Nome, Pedidos.Total
+FROM Clientes
+RIGHT JOIN Pedidos ON Clientes.ID_Cliente = Pedidos.ID_Cliente;
+```
+
+##### FULL JOIN (União Total)
+
+Ele tenta juntar tudo o que der. Se cruzar, ótimo. Se não cruzar, ele traz as sobras da Esquerda e as sobras da Direita ao mesmo tempo, preenchendo com `NULL` onde as duas pontas não se encontrarem.
+
+- **Utilidade:** Mapeamento geral. Muito usado em conciliação financeira para ver o cenário macro do sistema, garantindo que nada (nem clientes sem pedidos, nem pedidos sem clientes) fiquem de fora da visão do analista.
+- **Exemplo:** 
+```sql
+SELECT Clientes.Nome, Pedidos.Total
+FROM Clientes
+FULL JOIN Pedidos ON Clientes.ID_Cliente = Pedidos.ID_Cliente;
+```
