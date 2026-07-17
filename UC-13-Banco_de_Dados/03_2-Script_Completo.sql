@@ -29,7 +29,7 @@ CREATE TABLE Pedidos (
 -- Adiciona uma nova coluna em uma tabela que já existe
 GO
 ALTER TABLE Clientes
-ADD CPF VARCHAR(11) NOT NULL DEFAULT '000.000.000-00';
+ADD CPF VARCHAR(11) NOT NULL DEFAULT '00000000000';
 
 -- Destrói a tabela inteira e todos os dados contidos nela
 GO
@@ -38,3 +38,35 @@ GO
 -- Destrói o banco de dados completo
 GO
 -- DROP DATABASE SistemaVendas;
+
+
+-- ==================================
+-- ==================================
+
+-- Insere dados nas tabelas
+GO
+INSERT INTO Clientes (Nome, Email, CPF)
+VALUES ('João da Silva', 'joao@email.com', '11122233344');
+
+GO
+INSERT INTO Pedidos (Total, ID_Cliente)
+VALUES (250.50, 1);
+
+-- Atualiza dados em uma tabela
+UPDATE Clientes
+SET Email = 'joao_novo@gmail.com'
+WHERE ID_Cliente = 1;
+
+-- Deleta dados em uma tabela
+DELETE FROM Pedidos
+WHERE ID_Pedido = 1;
+
+-- Deleta os dados aplicando a regra de integridade referencial (ON DELETE CASCADE)
+DELETE FROM Clientes
+WHERE ID_Cliente = 1;
+
+/* VISUALIZAÇÃO DE DADOS
+SELECT * FROM Clientes;
+
+Select * FROM Pedidos;
+*/

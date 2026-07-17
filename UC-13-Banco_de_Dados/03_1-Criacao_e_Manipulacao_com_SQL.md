@@ -92,3 +92,72 @@ DROP DATABASE SistemaVendas;
 
 ---
 ---
+
+### Data Manipulation Language (DML)
+
+#### A) O que é o DML?
+
+Se o DDL construiu o "armário" e as "gavetas", o DML é a linguagem que usamos para guardar, alterar e jogar fora os "papéis" que vão dentro dessas gavetas.
+
+Com o DML, nós paramos de mexer na estrutura do banco e começamos a trabalhar com os **dados reais** do dia a dia da empresa (os cadastros, os valores, as datas).
+
+#### B) Inserindo Dados (`INSERT INTO`)
+
+É o comando usado para criar um novo registro na tabela. Vamos cadastrar nosso primeiro cliente e, em seguida, fazer um pedido para ele.
+
+- **Cadastrando um Cliente:**
+
+```sql
+-- O padrão é: INSERT INTO nome_da_tabela (colunas) VALUES (dados);
+INSERT INTO Clientes (Nome, Email, CPF)
+VALUES ('João da Silva', 'joao@email.com', '111.222.333-44');
+```
+
+- **Cadastrando um Pedido para o João:**
+
+```sql
+INSERT INTO Pedidos (Total, ID_Cliente)
+VALUES (250.50, 1);
+```
+
+#### C) Atualizando Dados (`UPDATE`)
+
+Clientes mudam de e-mail, produtos mudam de preço. O `UPDATE` serve para editar uma informação já existente no banco.
+
+**OBS:** **NUNCA FAÇA** um `UPDATE` sem cláusula `WHERE`. Se não tiver essa cláusula, o banco vai alterar **TODOS** os clientes de uma vez, causando um desastre irrecuperável, praticamente.
+
+- **Corrigindo o Email do João:**
+
+```sql
+UPDATE Clientes
+SET Email = 'joao_novo@gmail.com'
+WHERE ID_Cliente = 1;
+```
+
+#### D) Apagando Dados Físicos (`DELETE`)
+
+O `DELETE` apaga a linha inteira de registro da tabela.
+
+A diferença entre `DELETE` e `DROP` é que o `DROP` é um comando de "Data Definition", ou seja, destrói a "gaveta" inteira. Já o `DELETE` é um comando de "Data Manipulation", que remove o conteúdo, mas a "gaveta" continua lá.
+
+Assim como o `UPDATE`, o `DELETE` exige o `WHERE` para não apagar a tabela inteira por acidente.
+
+- **Cancelando um pedido específico:** 
+```sql
+DELETE FROM Pedidos
+WHERE ID_Pedido = 1;
+```
+
+#### O Efeito `CASCADE`
+
+Ao definirmos o campo "FK_Pedidos_Clientes" com a regra `ON DELETE CASCADE`, nós linkamos ele ao "ID_Cliente" da tabela "Clientes". Com isso, ao excluir um cliente, todo os pedidos vinculados à ele são apagados, em um "efeito cascata".
+
+- **Apagando o cliente João:**
+
+```sql
+DELETE FROM Clientes
+WHERE ID_Cliente = 1;
+```
+
+---
+
