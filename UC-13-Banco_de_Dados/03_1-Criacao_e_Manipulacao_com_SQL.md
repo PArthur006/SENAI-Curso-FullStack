@@ -313,3 +313,40 @@ SELECT Clientes.Nome, Pedidos.Total
 FROM Clientes
 FULL JOIN Pedidos ON Clientes.ID_Cliente = Pedidos.ID_Cliente;
 ```
+
+##### JOINs ESPECIAIS: Cross e Self Join
+
+Esses dois JOINs fogem da regra tradicional de "cruzar chaves". Eles resolvem problemas bem específicos de negócios e modelagem.
+
+**CROSS JOIN**
+
+O `CROSS JOIN` é o único JOIN que **não usa a cláusula `ON`**. Ele não quer saber se os dados combinam. A regra dele é pegar cada linha da primeira tabela e multiplica por todas as linhas da segunda tabela.
+
+- **O Perigo:** Se você cruzar uma tabela de 1.000 clientes com uma de 1.000 pedidos, o banco vai cuspir um relatório de 1 milhão de linhas na sua tela. Se feito por engano, trava o servidor.
+- **A Utilidade Real:** Criar combinações para popular sistemas ou gerar relatórios de matriz. Imagine que você tem uma tabela `Roupas` (Camiseta, Calça) e uma tabela `Tamanhos` (P, M, G). Você quer gerar o catálogo de todas as combinações possíveis.
+- **Exemplo:**
+```sql
+-- Multiplica as opções. O resultado será: 
+-- Camiseta P, Camiseta M, Camiseta G, Calça P, Calça M, Calça G.
+SELECT Roupas.Modelo, Tamanhos.Sigla
+FROM Roupas
+CROSS JOIN Tamanhos;
+```
+
+**SELF JOIN**
+
+O `SELF JOIN`não é um comando escrito na linguagem (você não digita `SELF JOIN` no SQL). É apenas uma técnica onde você faz uma tabela **cruzar com ela mesma**, usando `INNER` ou `LEFT JOIN`.
+
+- **Como funciona:** O banco não deixa você chamar a mesma tabela duas vezes com o mesmo nome. Então, você usa "apelidos" (`AS`) para fingir que existem duas tabelas diferentes na memória.
+- **Utilidade Real:** Resolver hierarquias dentro da mesma tabela. O exemplo mais clássico de sistemas de RH: A tabela `Funcionarios` tem os funcionários e os gerentes misturados. Para saber quem é o chefe de quem, a tabela precisa olhar para ela mesma.
+- **Exemplo:** Imagine que na tabela `Funcionarios`, o João tem o `ID_Chefe = 2`, e o ID 2 pertence à Maria (que também está na mesma tabela).
+```sql
+-- F1 é a visão do funcionário comum. 
+-- F2 é a visão de quem é o chefe dele.
+SELECT 
+    F1.Nome AS Funcionario, 
+    F2.Nome AS Gerente
+FROM Funcionarios AS F1
+LEFT JOIN Funcionarios AS F2 ON F1.ID_Chefe = F2.ID_Funcionario;
+```
+
