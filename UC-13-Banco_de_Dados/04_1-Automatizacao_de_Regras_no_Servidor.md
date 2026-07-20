@@ -51,3 +51,59 @@ EXEC SP_CadastrarNovoPedido @ValorDoPedido = 1500.00, @IDCliente = 3;
 
 ### Triggers
 
+É um bloco de código lógico amarrado fisicamente a uma tabela. Ele é estritamente automático. Você **não pode** executar um Trigger manualmente (não existe `EXEC Trigger`). Ele é disparado sozinho pelo motor do banco de dados no exato milissegundo em que uma ação de DML (Insert, Update ou Delete) é executada naquela tabela.
+
+### Para que serve no mundo real?
+
+1. **Auditoria à prova de falhas:** Se um usuário mal-intencionado acessar o banco diretamente e alterar o próprio salário ou apagar um pedido, a aplicação não verá isso. Mas o Trigger da tabela vê. Ele pode capturar a alteração e salvar um log dizendo "quem" alterou e "quando".
+2. **Regras de Negócio Inquebráveis:** Quando um pedido é registrado (`INSERT` na tabela `Pedidos`), um Trigger pode ir até a tabela `Produtos` e dar baixa no estoque automaticamente, sem intervenção humana.
+
+### Tabelas Virtuais
+
+Para que o Trigger consiga tomar decisões (usando `IF / ELSE`), ele precisa saber exatamente o que está acontecendo com o dado naquele exato momento. O SQL Server fornece isso criando duas tabelas temporárias na memória RAM, que só existem durante o milésimo de segundo em que o gatilho está rodando:
+
+- **Tabela `inserted`:** Guarda a "foto" de como o dado ficou **depois** da ação. (Útil em Insert e Update).
+- **Tabela `deleted`:** Guarda a "foto" de como o dado era **antes** da ação. (Útil em Delete e Update).
+
+Se foi feito um `UPDATE`, as duas tabelas existem simultaneamente: a `deleted` mostra o valor antigo, e a `inserted` mostra o valor novo.
+
+### Como Funciona na Prática
+
+Imagine que a empresa exija que **nenhum pedido apagado suma de verdade**. Precisamos criar uma tabela de Log para auditoria. Sempre que alguém der um `DELETE` na tabela de `Pedidos`, o gatilho captura o dado apagado e salva no Log silenciosamente.
+
+**A Tabela de Auditoria (Onde a cópia ficará salva):**
+```sql
+CREATE TABLE Log_Pedidos_Apagados (
+    ID_Log INT IDENTITY(1,1) PRIMARY KEY,
+    ID_Pedido_Antigo INT,
+    Valor_Apagado DECIMAL(10,2),
+    DataExclusao DATETIME DEFAULT GETDATE()
+);
+```
+
+**Criando o Trigger:**
+
+```sql
+-- Cria o gatilho amarrado à tabela Pedidos
+CREATE TRIGGER TRG_Auditoria_ExclusaoPedido
+ON Pedidos
+AFTER DELETE -- Define que ele só acorda APÓS um comando de exclusão
+AS
+BEGIN
+    -- O gatilho usa a tabela virtual 'deleted' para resgatar o que acabou de ser apagado
+    -- e insere silenciosamente na tabela de Log
+    
+    INSERT INTO Log_Pedidos_Apagados (ID_Pedido_Antigo, Valor_Apagado)
+    SELECT ID_Pedido, Total FROM deleted;
+END;
+```
+
+**A Execução:**
+
+No dia a dia, a aplicação Back-End envia o comando normal:
+
+```sql
+DELETE FROM Pedidos WHERE ID_Pedido = 2
+```
+
+Quando isso acontece, o pedido de ID 2 é apagado da tabela. Imediatamente, o motor do SQL intercepta a ação, olha para a tabela em memória `deleted`, e insere uma cópia do pedido 2 na tabela `Log_Pedidos_Apagados`.
